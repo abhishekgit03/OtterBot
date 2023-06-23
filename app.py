@@ -3,7 +3,10 @@ import streamlit as st
 from streamlit_chat import message
 import pymongo
 import os
-from typing import Literal
+try:
+    from typing import Literal
+except ImportError:
+    from typing_extensions import Literal
 from dotenv import load_dotenv
 load_dotenv()
 
