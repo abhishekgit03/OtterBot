@@ -2,10 +2,13 @@ import openai
 import streamlit as st
 from streamlit_chat import message
 import pymongo
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-openai.api_key = st.secrets['api_secret']
-
-client = pymongo.MongoClient(st.secrets['mongo_secret'])
+openai.api_key = os.getenv('api_secret')
+print("openai.api_key=",openai.api_key)
+client = pymongo.MongoClient(os.getenv('mongo_secret'))
 db=client.myapp
 userdb=db.userdb
 
@@ -25,6 +28,7 @@ def generate_response(prompt,unique_id):
     chat = add_chat_log("user", prompt, chat)
     userdb.update_one({"_id":unique_id},{"$set":{"chat":chat}})
     Chat_History = "\n".join(chat.splitlines()[-5:])
+    print("Reached here")
     m=[{"role": "system", "content":"You are a helpful AI agent that can answer to any questions of the user. Your name is OtterBot"},
      {"role": "assistant", "content": str(Chat_History)},
     {"role": "user", "content": prompt}]
@@ -34,6 +38,7 @@ def generate_response(prompt,unique_id):
         temperature = 0.3,
         messages=m)
     output=result["choices"][0]['message']['content']
+    print("Reached here 1")
     chat = add_chat_log("assistant", output, chat)
     userdb.update_one({"_id":unique_id}, {"$set":{"chat":chat}})
     return output
