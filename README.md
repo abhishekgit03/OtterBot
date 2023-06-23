@@ -1,6 +1,8 @@
 # OtterBot
 
 OtterBot is an OpenAI-powered chatbot with MongoDB integration and Streamlit for the frontend. It is designed to provide a seamless conversational experience for users by leveraging the power of OpenAI's language model and storing data in a MongoDB database.
+![image](https://github.com/abhishekgit03/OtterBot/assets/92089364/49e7052d-d0da-4f49-8736-3bdef7de0c49)
+
 
 ## Features
 
